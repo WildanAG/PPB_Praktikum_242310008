@@ -1,128 +1,155 @@
-import React from 'react';
-import { View, Image, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import React from "react";
+import {
+  View,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  ImageBackground,
+} from "react-native";
 
 const Index = () => {
+  const biodata = {
+    nama: "Anton Sukamto",
+    nim: "20200101",
+    alamat: "bogor",
+    email: "anton@gmail.com",
+    nomor_telepon: "0856712283",
+    umur: 35,
+    kelamin: "Laki-laki",
+    hobi: ["Makan", "Konser Metal", "Tidur"],
+    status: "Single",
+  };
 
-    const biodata = {
-        nama: "Anton Sukamto",
-        nim: "20200101",
-        alamat: "bogor",
-        email: "anton@gmail.com",
-        nomor_telepon: "0856712283"
-    }
+  return (
+    <ImageBackground
+      source={require("../../../assets/avatar/image.png")}
+      style={ui.ImageBackground}
+    >
+      <ScrollView
+        style={ui.screen}
+        contentContainerStyle={{ paddingVertical: 20 }}
+      >
+        <View style={ui.container}>
+          <View style={ui.headerSection}>
+            <Image
+              source={require("../../../assets/avatar/download.png")}
+              style={ui.avatar}
+            />
+            <Text style={ui.mainName}>{biodata.nama}</Text>
+            <Text style={ui.mainNim}>{biodata.nim}</Text>
+          </View>
 
-    return (
-        <View style={styles.container}> 
-            <Image source={require("../../../assets/avatar/download.png")} style={styles.headers.img_avatar}/>            
-            <Text>Nama: {biodata.nama}</Text>
-            <Text>Nim: {biodata.nim}</Text>
+          <View style={ui.inputGroup}>
+            <Text style={ui.label}>Phone</Text>
+            <TextInput value={biodata.nomor_telepon} style={ui.input} />
+          </View>
 
-            <View>
-                <View>
-                    <Text style={styles.identity.title}>Phone</Text>
-                    <TextInput
-                    value = {biodata.nomor_telepon}
-                    style = {styles.identity.input_text}
-                    autoFocus
-                    />
-                </View>
-            </View>
+          <View style={ui.inputGroup}>
+            <Text style={ui.label}>Email</Text>
+            <TextInput value={biodata.email} style={ui.input} />
+          </View>
 
-            <View>
-                <View>
-                    <Text style={styles.identity.title}>Email</Text>
-                    <TextInput
-                    value = {biodata.email}
-                    style = {styles.identity.input_text}
-                    autoFocus
-                    />
-                </View>
-            </View>
+          <View style={ui.inputGroup}>
+            <Text style={ui.label}>Alamat</Text>
+            <TextInput value={biodata.alamat} style={ui.input} />
+          </View>
 
-            <View>
-                <View>
-                    <Text style={styles.identity.title}>Alamat</Text>
-                    <TextInput
-                    value = {biodata.alamat}
-                    style = {styles.identity.input_text}
-                    autoFocus
-                    />
-                </View>
-            </View>
+          <View style={ui.inputGroup}>
+            <Text style={ui.label}>Umur</Text>
+            <TextInput value={biodata.umur} style={ui.input} />
+          </View>
 
-            <View style={{marginTop: 15}}>
-                <TouchableOpacity style={styles.identity.button}>
-                    <Text style={styles.identity.button_text}>Save</Text>
-                </TouchableOpacity>
-            </View>
+          <View style={ui.inputGroup}>
+            <Text style={ui.label}>Gender</Text>
+            <TextInput value={biodata.kelamin} style={ui.input} />
+          </View>
+
+          <View style={ui.inputGroup}>
+            <Text style={ui.label}>Status</Text>
+            <TextInput value={biodata.status} style={ui.input} />
+          </View>
+
+          <View style={ui.inputGroup}>
+            <Text style={ui.label}>Hobi</Text>
+            <TextInput value={biodata.hobi} style={ui.input} />
+          </View>
+
+          <View style={{ marginTop: 20 }}>
+            <TouchableOpacity style={ui.buttonPrimary}>
+              <Text style={ui.buttonText}>Save</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-    );        
-}
+      </ScrollView>
+    </ImageBackground>
+  );
+};
 
-const styles = StyleSheet.create({
+// Styling dibuat FLAT agar tidak "shit" dan mudah dibaca
+const ui = {
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+
+    paddingHorizontal: 20,
+  },
+  headerSection: {
     alignItems: "center",
-    justifyContent: "center",
-    margin: 5,
+    marginBottom: 30,
   },
-  headers: {
-    title: {
-      fontWeight: "bold",
-      fontSize: 40,
-    },
-    subtitle: {
-      fontWeight: "bold",
-      fontSize: 20,
-      color: "red",
-    },
-    img_avatar: {
-      width: 80,
-      height: 80,
-      borderRadius: 100,
-      borderColor: "black",
-      borderWidth: 4,
-      padding: 2,
-      backgroundColor: "#f2f2f2",
-    },
+  screen: {
+    flex: 1,
   },
-  identity: {
-    container: {
-      alignSelf: "stretch",
-      padding: 10,
-      marginTop: 20,            
-    },
-    card_input: {
-      borderWidth: 5,
-      borderColor: "#9b9d9f",
-      borderRadius: 10,
-      paddingHorizontal: 10,
-      paddingVertical: 5,
-      marginBottom: 10,
-    },
-    title: {
-      color: "#9b9d9f",
-      fontSize: 16,
-      marginBottom: 0,
-    },
-    input_text: {
-      color: "#000",
-      fontSize: 16,
-      padding: 0,
-    },
-    button: {
-      alignItems: "center",
-      backgroundColor: "#0ea6d0",
-      padding: 15,
-      borderRadius: 10,
-    },
-    button_text: {
-      fontSize: 18,
-      color: "white",
-      fontWeight: "bold",
-    },
+  ImageBackground: {
+    flex: 1,
+    height: "100%",
+    width: "100%",
   },
-});
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: "#0ea6d0",
+    marginBottom: 10,
+  },
+  mainName: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#222",
+  },
+  mainNim: {
+    fontSize: 16,
+    color: "#777",
+  },
+  inputGroup: {
+    marginBottom: 15,
+    borderBottomWidth: 1,
+    borderRadius: 5,
+    width: "100%",
+  },
+  label: {
+    color: "#9b9d9f",
+    fontSize: 13,
+    marginBottom: 2,
+  },
+  input: {
+    color: "#000",
+    fontSize: 16,
+    paddingVertical: 8,
+  },
+  buttonPrimary: {
+    alignItems: "center",
+    backgroundColor: "#0ea6d0",
+    padding: 15,
+    borderRadius: 10,
+  },
+  buttonText: {
+    fontSize: 16,
+    color: "white",
+    fontWeight: "bold",
+  },
+};
 
 export default Index;
