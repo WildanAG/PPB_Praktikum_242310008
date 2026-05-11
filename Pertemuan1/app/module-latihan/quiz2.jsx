@@ -1,0 +1,1 @@
+export {default} from "@/components/modul-latihan/Quiz2/index";
