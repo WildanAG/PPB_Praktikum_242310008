@@ -1,2 +1,2 @@
-export { default } from "@/components/modul-latihan/latihan4/praktikum";
+export { default } from "@/components/e-catalogs/home";
 
