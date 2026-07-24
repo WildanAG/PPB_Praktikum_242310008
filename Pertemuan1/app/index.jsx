@@ -1,5 +1,5 @@
 import { Redirect } from "expo-router";
 
 export default function Index() {
-  return <Redirect href={"/module-latihan/latihan5"}/>
+  return <Redirect href={"/main-apps"}/>
 }

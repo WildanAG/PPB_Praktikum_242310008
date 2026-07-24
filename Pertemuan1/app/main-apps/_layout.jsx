@@ -1,13 +1,15 @@
 import { Ionicons } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { Tabs, usePathname, useRouter, useSegments } from "expo-router";
+import { usePathname, useRouter, useSegments } from "expo-router";
+import { Drawer } from "expo-router/drawer";
 import { useEffect, useRef } from "react";
 import { Alert, BackHandler, StatusBar } from "react-native";
 import "react-native-reanimated";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { color_list } from "../../components/e-catalogs/styles/StyleApps";
 
-export default function TabLayout() {
+export default function DrawerLayout() {
   const router = useRouter();
   const segments = useSegments();
   const pathname = usePathname();
@@ -23,8 +25,8 @@ export default function TabLayout() {
         (segments.length === 2 &&
           segments[0] === "main-apps" &&
           segments[1] === "index");
+
       if (isOnHomeTab) {
-        // Double tap to exit
         if (backPressCount.current === 0) {
           backPressCount.current = 1;
 
@@ -32,7 +34,7 @@ export default function TabLayout() {
             "Exit App",
             "Press back again to exit",
             [{ text: "OK" }],
-            { cancelable: true },
+            { cancelable: true }
           );
 
           backPressTimer.current = setTimeout(() => {
@@ -50,7 +52,7 @@ export default function TabLayout() {
 
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
-      backAction,
+      backAction
     );
 
     return () => {
@@ -59,54 +61,54 @@ export default function TabLayout() {
         clearTimeout(backPressTimer.current);
       }
     };
-  }, [router]);
+  }, [router, pathname, segments]);
 
   return (
-    <>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <StatusBar style="auto" barStyle={"dark-content"} hidden={false} />
-      <Tabs
+      <Drawer
         screenOptions={{
-          headerShown: false,
-          tabBarActiveTintColor: color_list.green,
-          tabBarInactiveTintColor: "gray",
-          tabBarShowLabel: true,
-          tabBarStyle: {
+          headerShown: true, // Menampilkan header dengan tombol hamburger menu
+          headerTintColor: color_list.green_dark,
+          drawerActiveTintColor: color_list.green,
+          drawerInactiveTintColor: "gray",
+          drawerStyle: {
             backgroundColor: color_list.white,
-            borderTopWidth: 2,
-            borderTopColor: color_list.green_dark,
-            height: 70,
-            paddingBottom: 5,
+            width: 250,
           },
-          tabBarLabelStyle: {
-            fontSize: 12,
+          drawerLabelStyle: {
+            fontSize: 14,
             fontWeight: "600",
+            marginLeft: -10,
           },
         }}
       >
-        <Tabs.Screen
+        <Drawer.Screen
           name="index"
           options={{
+            drawerLabel: "Home",
             title: "Home",
-            tabBarIcon: ({ color, size }) => (
+            drawerIcon: ({ color, size }) => (
               <Ionicons name="book" size={size} color={color} />
             ),
           }}
         />
-        <Tabs.Screen
+        <Drawer.Screen
           name="explore"
           options={{
+            drawerLabel: "Explore",
             title: "Explore",
-            href: "/explore",
-            tabBarIcon: ({ color, size }) => (
+            drawerIcon: ({ color, size }) => (
               <Ionicons name="navigate-circle" size={size} color={color} />
             ),
           }}
         />
-        <Tabs.Screen
+        <Drawer.Screen
           name="mylibrary"
           options={{
+            drawerLabel: "My Library",
             title: "My Library",
-            tabBarIcon: ({ color, size }) => (
+            drawerIcon: ({ color, size }) => (
               <MaterialCommunityIcons
                 name="bookshelf"
                 size={size}
@@ -115,17 +117,28 @@ export default function TabLayout() {
             ),
           }}
         />
-        <Tabs.Screen
+        <Drawer.Screen
+          name="scanner"
+          options={{
+            drawerLabel: "Scanner",
+            title: "Scanner",
+            drawerIcon: ({ color, size }) => (
+              <Ionicons name="scan" size={size} color={color} />
+            ),
+          }}
+        />
+        <Drawer.Screen
           name="account"
           options={{
+            drawerLabel: "Account",
             title: "Account",
-            tabBarIcon: ({ color, size }) => (
+            drawerIcon: ({ color, size }) => (
               <AntDesign name="user" size={size} color={color} />
             ),
           }}
         />
-      </Tabs>
-    </>
+      </Drawer>
+    </GestureHandlerRootView>
   );
 }
 

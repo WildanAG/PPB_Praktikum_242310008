@@ -1,0 +1,2 @@
+export { default } from "@/components/e-catalogs/components/books/details/detail";
+

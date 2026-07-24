@@ -171,6 +171,7 @@ const styles = StyleSheet.create({
     color: "gray",
     marginLeft: 4,
   },
+  color_list: color_list,
 });
 
 export { color_list, styles };

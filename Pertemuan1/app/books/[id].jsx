@@ -1,1 +1,1 @@
-export { default } from "@/components/books/detail";
+export { default } from "@/components/e-catalogs/components/books/details/detail";
