@@ -8,7 +8,7 @@ export default function Screen3() {
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar barStyle={"dark-content"} />
       <View style={styles.container}>
-        <Text style={styles.title}>Thrid Screen</Text>
+        <Text style={styles.title}>Third Screen</Text>
         <Button title="Go first screen" onPress={() => router.push("/")} />
       </View>
     </SafeAreaView>
