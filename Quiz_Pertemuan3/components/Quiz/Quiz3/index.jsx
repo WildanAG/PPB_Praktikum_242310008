@@ -58,7 +58,7 @@ const styles = StyleSheet.create ({
         flex: 1,
         backgroundColor: 'white',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center',   
     },
 
     card1: {        

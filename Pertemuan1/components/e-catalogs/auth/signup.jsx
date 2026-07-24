@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
@@ -91,17 +92,40 @@ export default function Signup() {
 
     // Proses Registrasi
     setIsLoading(true);
-    console.log("Registering user:", username, email, password);
 
     try {
       const param = { username, email, password };
+
+      // Wajib request ke POST https://fakestoreapi.com/users
       const results = await ADD_USER(param);
-      console.log("Registration response:", results);
+
       if (results.message) {
-        Alert.alert("Registration Failed", results.message);
+        // Request gagal / server menolak
         setIsLoading(false);
+        Alert.alert("Registration Failed", "Gagal membuat akun");
         return;
-      } else if (results.data && results.data.id) {
+      }
+
+      if (results.data && results.data.id) {
+        // Simpan data akun secara lokal (simulasi) menggunakan AsyncStorage.
+        // Catatan: ini BUKAN sesi login, hanya simulasi penyimpanan data
+        // pendaftaran lokal sesuai ketentuan Latihan 1. Sesi login yang
+        // sebenarnya baru dibuat saat pengguna Sign In (lihat signin.jsx).
+        try {
+          const registeredUser = {
+            id: results.data.id,
+            username,
+            email,
+            registeredAt: new Date().toISOString(),
+          };
+          await AsyncStorage.setItem(
+            "registeredUser",
+            JSON.stringify(registeredUser),
+          );
+        } catch (storageError) {
+          console.warn("Error saving registered user locally:", storageError);
+        }
+
         setIsLoading(false);
         Alert.alert(
           "Registration Successful! 🎉",
@@ -117,18 +141,12 @@ export default function Signup() {
         );
       } else {
         setIsLoading(false);
-        Alert.alert(
-          "Registration Failed",
-          "Invalid response from server. Please try again.",
-        );
+        Alert.alert("Registration Failed", "Gagal membuat akun");
       }
     } catch (error) {
       console.error("Error during registration:", error);
       setIsLoading(false);
-      Alert.alert(
-        "Registration Failed",
-        "An unexpected error occurred. Please try again.",
-      );
+      Alert.alert("Registration Failed", "Gagal membuat akun");
     }
   };
 

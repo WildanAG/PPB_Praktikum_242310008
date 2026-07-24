@@ -13,6 +13,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { styles } from "./styles/StyleApps";
 
 const DEFAULT_AVATAR =
@@ -87,6 +88,29 @@ export default function Account() {
     }
   };
 
+  // ---- Sign Out (Latihan 3) ----
+  // Menghapus seluruh data sesi dari AsyncStorage lalu mengarahkan
+  // pengguna kembali ke halaman Sign In. Setelah ini, halaman yang
+  // butuh login (mis. Detail Buku) tidak bisa diakses lagi.
+  const handleSignOut = () => {
+    Alert.alert("Sign Out", "Apakah kamu yakin ingin keluar?", [
+      { text: "Batal", style: "cancel" },
+      {
+        text: "Sign Out",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            await AsyncStorage.multiRemove(["userData", "authToken"]);
+          } catch (err) {
+            console.warn("Error clearing session:", err);
+          } finally {
+            router.replace("/signin");
+          }
+        },
+      },
+    ]);
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" />
@@ -146,7 +170,7 @@ export default function Account() {
           <Text style={{ marginTop: 12, fontSize: 16, fontWeight: "bold", color: styles.color_list.black }}>
             {name}
           </Text>
-          <Text style={{ color: styles.color_list.gray, fontSize: 13 }}>{email}</Text>
+          <Text style={{ color: "gray", fontSize: 13 }}>{email}</Text>
         </View>
 
         {/* Form */}
@@ -219,6 +243,24 @@ export default function Account() {
               </Text>
             </>
           )}
+        </TouchableOpacity>
+
+        {/* Sign Out */}
+        <TouchableOpacity
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            paddingVertical: 14,
+            marginTop: 14,
+            gap: 8,
+          }}
+          onPress={handleSignOut}
+        >
+          <Ionicons name="log-out-outline" size={20} color="#c0392b" />
+          <Text style={{ color: "#c0392b", fontWeight: "bold", fontSize: 15 }}>
+            Sign Out
+          </Text>
         </TouchableOpacity>
 
         <View style={{ height: 40 }} />
